@@ -124,15 +124,15 @@ const dashboardCtl = {
     },
     async changePassword(req,res){
         try {
-            const {currentPassword, newPassword} = req.body;
+            const {password, newPassword} = req.body;
             const user = await User.findById(req.user.userId);
-            const isMatch = await bcrypt.compare(currentPassword, user.password);
+            const isMatch = await bcrypt.compare(password, user.password);
             if (!isMatch) {
                 return res.redirect('/changePassword');
             }
             const hashedPassword = await bcrypt.hash(newPassword, 10);
             await User.findByIdAndUpdate(req.user.userId, { password: hashedPassword });
-            return res.redirect('/');
+            return res.redirect('/login');
         } catch (error) {
             console.log(error);
             return res.redirect('/changePassword');

@@ -1,0 +1,174 @@
+<%- include('../partials/header.ejs')%>
+
+  <style>
+    /* Neumorphism table card — use theme background */
+
+
+    .neo-card {
+      width: 100%;
+      border-radius: 12px;
+      background: transparent;
+      padding: 18px;
+      box-shadow: 8px 8px 20px rgba(0, 0, 0, 0.04), -8px -8px 20px rgba(255, 255, 255, 0.6);
+      border: 1px solid rgba(0, 0, 0, 0.04);
+    }
+
+    .neo-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px
+    }
+
+    .neo-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: #222
+    }
+
+    .neo-sub {
+      color: #666;
+      font-size: 13px
+    }
+
+    .neo-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0 10px
+    }
+
+    .neo-table thead th {
+      text-align: left;
+      padding: 12px 14px;
+      color: #444;
+      font-weight: 700;
+      border-bottom: none
+    }
+
+    .neo-table tbody tr {
+      background: #f5f7fb;
+      border-radius: 10px;
+      box-shadow: inset 6px 6px 12px rgba(0, 0, 0, 0.03), inset -6px -6px 12px rgba(255, 255, 255, 0.6)
+    }
+
+    .neo-table tbody td {
+      padding: 12px 14px;
+      vertical-align: middle;
+      border: none
+    }
+
+    .avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #e6eef9;
+      color: #2b4d8c;
+      font-weight: 700;
+      overflow: hidden;
+    }
+
+    .avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 8px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .badge-modern {
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 12px;
+      color: #fff
+    }
+
+    .badge-success {
+      background: #5eea9a;
+      color: #094
+    }
+
+    .badge-info {
+      background: #6bc5ff
+    }
+
+    @media (max-width:800px) {
+      .neo-table thead {
+        display: none
+      }
+
+      .neo-table tbody td {
+        display: block;
+        padding: 10px
+      }
+
+      .neo-table tbody tr {
+        margin-bottom: 12px
+      }
+    }
+  </style>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="neo-wrap">
+          <div class="main-panel">
+            <div class="content-wrapper bg-transparent">
+              <div class="neo-card">
+                <div class="neo-header">
+                  <div>
+                    <div class="neo-title">Users</div>
+                    <div class="neo-sub">Registered users list</div>
+                  </div>
+                </div>
+
+                <div class="table-responsive">
+                  <table class="neo-table">
+                    <thead>
+                      <tr>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Description</th>
+                        <th>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% if (categories && categories.length) { %>
+                        <% categories.forEach(function(cat){ %>
+                          <tr>
+                            <td>
+                              <div class="avatar">
+                                <% if (cat.image) { %>
+                                  <img src="<%= cat.image %>" alt="Category Image" class="avatar-img" />
+                                <% } else { %>
+                                  <%= (cat.name||'U').split(' ').map(n=>n[0]).slice(0,2).join('').toUpperCase() %>
+                                <% } %>
+                              </div>
+                            </td>
+                            </td>
+                            <td><%= cat.name %></td>
+                            <td><%= cat.description || 'No description' %></td>
+                            <td>
+                              <a href="/edit-category/<%= cat._id %>" class="btn btn-sm btn-outline-primary">Edit</a>
+                              <a href="/delete-category/<%= cat._id %>" class="btn btn-sm btn-outline-danger">Delete</a>
+                            </td>
+                          </tr>
+                        <% }) %>
+                      <% } else { %>
+                        <tr><td colspan="5" class="text-center">No categories found</td></tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('../partials/footer.ejs')%>

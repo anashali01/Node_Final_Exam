@@ -1,0 +1,101 @@
+<%- include('../partials/header.ejs')%>
+
+<style>
+    .edit-wrap { padding: 20px }
+    .edit-card {
+        max-width: 720px;
+        margin: 0 auto;
+        border-radius: 12px;
+        background: transparent;
+        padding: 22px;
+        border: 1px solid rgba(0,0,0,0.04);
+        box-shadow: 8px 8px 20px rgba(0,0,0,0.04), -8px -8px 20px rgba(255,255,255,0.6)
+    }
+    .edit-title { font-size:22px; font-weight:700; margin-bottom:6px; color:#222 }
+    .edit-sub { color:#666; margin-bottom:18px }
+    label { display:block; font-weight:600; color:#333; margin-bottom:6px; font-size:13px }
+    input[type=text], input[type=number], textarea, select { width:100%; padding:10px 12px; border-radius:8px; border:1px solid #e6e6e6; background:#fff }
+    .btn-primary { background: linear-gradient(135deg,#667eea 0%,#764ba2 100%); border:none; color:#fff; padding:10px 16px; border-radius:8px; font-weight:700 }
+    .actions { display:flex; gap:8px; align-items:center }
+    .preview-img { width:96px; height:96px; object-fit:cover; border-radius:8px; border:1px solid rgba(0,0,0,0.06) }
+    @media(max-width:700px){ .form-row { flex-direction:column } }
+</style>
+
+<div class="main-panel">
+    <div class="content-wrapper">
+        <div class="edit-wrap">
+            <div class="edit-card">
+                <div class="edit-title">Edit Product</div>
+                <div class="edit-sub">Update product details below and save changes.</div>
+
+                <form action="/edit-product/<%= product?._id %>" method="post" enctype="multipart/form-data">
+                    <div style="display:flex;gap:12px;flex-direction:column">
+                        <div>
+                            <label for="name">Product name</label>
+                            <input id="name" name="name" type="text" placeholder="e.g. Laptop" value="<%= product?.name || '' %>" required />
+                        </div>
+
+                        <div>
+                            <label for="description">Description</label>
+                            <textarea id="description" name="description" rows="4" placeholder="Product description"><%= product?.description || '' %></textarea>
+                        </div>
+
+                        <div>
+                            <label for="price">Price</label>
+                            <input id="price" name="price" type="number" step="0.01" min="0" placeholder="0.00" value="<%= product?.price || '' %>" required />
+                        </div>
+
+                        <div>
+                            <label for="categoryId">Category</label>
+                            <select id="categoryId" name="categoryId" required>
+                                <option value="">Select category</option>
+                                <% if (categories && categories.length) { %>
+                                    <% categories.forEach(function(c){ %>
+                                        <option value="<%= c._id %>" <%= product && product.category && product.category._id.toString() === c._id.toString() ? 'selected' : '' %>>
+                                            <%= c.name %>
+                                        </option>
+                                    <% }) %>
+                                <% } %>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="stock">Stock</label>
+                            <input id="stock" name="stock" type="number" min="0" value="<%= product?.stock || 0 %>" />
+                        </div>
+
+                        <div>
+                            <label for="rating">Rating (0-5)</label>
+                            <input id="rating" name="rating" type="number" step="0.1" min="0" max="5" value="<%= product?.rating || 0 %>" />
+                        </div>
+
+                        <div style="display:flex;gap:12px;align-items:center">
+                            <div>
+                                <label for="image">Image (optional)</label>
+                                <input id="image" name="image" type="file" accept="image/*" />
+                            </div>
+                            <% if (product && product.image) { %>
+                            <div>
+                                <label style="visibility:hidden">Preview</label>
+                                <img src="<%= product.image %>" alt="preview" class="preview-img" />
+                            </div>
+                            <% } %>
+                        </div>
+
+                        <div style="display:flex;align-items:center;gap:8px">
+                            <input id="isActive" name="isActive" type="checkbox" value="true" <%= product && product.isActive ? 'checked' : '' %> />
+                            <label for="isActive" style="margin:0;font-weight:600;">Active</label>
+                        </div>
+
+                        <div class="actions" style="margin-top:8px">
+                            <button type="submit" class="btn-primary">Save Changes</button>
+                            <a href="/products" class="btn btn-outline-secondary text-black">Cancel</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer.ejs')%>

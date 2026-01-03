@@ -28,9 +28,7 @@ dashboardRouter.get('/delete/:id',dashboardCtl.deleteUser)
 dashboardRouter.get('/edit/:id',dashboardCtl.editUserPage);
 dashboardRouter.post('/edit/:id',dashboardCtl.editUser);
 
-// Change Password Router
-dashboardRouter.get('/changePassword',dashboardCtl.changePasswordPage);
-dashboardRouter.post('/changePassword',dashboardCtl.changePassword);
+
 
 
 export default dashboardRouter;

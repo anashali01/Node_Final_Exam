@@ -122,22 +122,6 @@ const dashboardCtl = {
     changePasswordPage(req,res){
         return res.render('./pages/changePassword.ejs')
     },
-    async changePassword(req,res){
-        try {
-            const {password, newPassword} = req.body;
-            const user = await User.findById(req.user.userId);
-            const isMatch = await bcrypt.compare(password, user.password);
-            if (!isMatch) {
-                return res.redirect('/changePassword');
-            }
-            const hashedPassword = await bcrypt.hash(newPassword, 10);
-            await User.findByIdAndUpdate(req.user.userId, { password: hashedPassword });
-            return res.redirect('/login');
-        } catch (error) {
-            console.log(error);
-            return res.redirect('/changePassword');
-        }
-    }
 }
 
 export default dashboardCtl;

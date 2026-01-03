@@ -38,12 +38,12 @@ const productCtl = {
     async viewProductsPage(req,res){
         try {
             const products = await Product.find({}).populate('category').lean();
-            return res.render('./pages/viewProducts.ejs',{
+            return res.render('./pages/viewproducts.ejs',{
                 products
             })
         } catch (error) {
             console.log(error);
-            return res.render('./pages/viewProducts.ejs',{
+            return res.render('./pages/viewproducts.ejs',{
                 products : []
             })
         }

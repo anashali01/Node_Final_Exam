@@ -40,12 +40,13 @@
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="../../index.html">
+          <a class="nav-link" href="/">
             <i class="mdi mdi-home menu-icon"></i>
             <span class="menu-title">Dashboard</span>
           </a>
         </li>
         <ul class="nav">
+          <% if (user.role === 'admin') { %>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#usersMenu" aria-expanded="false" aria-controls="usersMenu">
               <i class="mdi mdi-format-list-bulleted menu-icon"></i>
@@ -56,8 +57,10 @@
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item"> <a class="nav-link" href="/viewUsers">Manage Users</a></li>
               </ul>
+
             </div>
           </li>
+          <% } %>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#productsMenu" aria-expanded="false" aria-controls="productsMenu">
               <i class="mdi mdi-format-list-bulleted menu-icon"></i>
@@ -66,13 +69,16 @@
             </a>
             <div class="collapse" id="productsMenu">
               <ul class="nav flex-column sub-menu">
+                <% if(user.role === 'admin') { %>
                 <li class="nav-item"> <a class="nav-link" href="/addProducts">Add Products</a></li>
                 <li class="nav-item"> <a class="nav-link" href="/products">Manage Products</a></li>
+                <% } %>
                 <li class="nav-item"> <a class="nav-link" href="/product-card"> Products</a></li>
               </ul>
             </div>
           </li>
           </li>
+          <% if(user.role === 'admin') { %>
           <li class="nav-item">
             <a class="nav-link" data-toggle="collapse" href="#categoryMenu" aria-expanded="false" aria-controls="categoryMenu">
               <i class="mdi mdi-format-list-bulleted menu-icon"></i>
@@ -86,7 +92,7 @@
               </ul>
             </div>
           </li>
-
+          <% } %>
         </ul>
       </ul>
     </nav>

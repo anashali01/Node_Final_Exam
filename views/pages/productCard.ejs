@@ -200,10 +200,12 @@
                                         <span><%= (p.rating || 0).toFixed(1) %>/5</span>
                                     </div>
                                 </div>
+                                <% if(user.role === 'Admin'){%> 
                                 <div class="product-actions">
                                     <a href="/edit-product/<%= p._id %>" class="btn-sm btn-edit">Edit</a>
                                     <a href="/delete-product/<%= p._id %>" class="btn-sm btn-delete" onclick="return confirm('Delete this product?')">Delete</a>
                                 </div>
+                                <% } %>
                             </div>
                         </div>
                     <% }) %>

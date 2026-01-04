@@ -127,9 +127,9 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <% if (user && user.length) { %>
-                        <% user.forEach(function(u){ %>
-                          <%if(u.id !== user.id){%>
+                      <% if (users && users.length) { %>
+                        <% users.forEach(function(u){ %>
+                           <% if (u.role !== "Admin") { %> 
                             <tr>
                             <td>
                               <div class="avatar">

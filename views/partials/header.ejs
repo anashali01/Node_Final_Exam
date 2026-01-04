@@ -46,53 +46,56 @@
           </a>
         </li>
         <ul class="nav">
-          <% if (user.role === 'admin') { %>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#usersMenu" aria-expanded="false" aria-controls="usersMenu">
-              <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-              <span class="menu-title">Users</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="usersMenu">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/viewUsers">Manage Users</a></li>
-              </ul>
+          <% if (user.role==='Admin' ) { %>
+            <li class="nav-item">
+              <a class="nav-link" data-toggle="collapse" href="#usersMenu" aria-expanded="false"
+                aria-controls="usersMenu">
+                <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                <span class="menu-title">Users</span>
+                <i class="menu-arrow"></i>
+              </a>
+              <div class="collapse" id="usersMenu">
+                <ul class="nav flex-column sub-menu">
+                  <li class="nav-item"> <a class="nav-link" href="/viewUsers">Manage Users</a></li>
+                </ul>
 
-            </div>
-          </li>
-          <% } %>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#productsMenu" aria-expanded="false" aria-controls="productsMenu">
-              <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-              <span class="menu-title">Products</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="productsMenu">
-              <ul class="nav flex-column sub-menu">
-                <% if(user.role === 'admin') { %>
-                <li class="nav-item"> <a class="nav-link" href="/addProducts">Add Products</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/products">Manage Products</a></li>
+              </div>
+            </li>
+            <% } %>
+              <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#productsMenu" aria-expanded="false"
+                  aria-controls="productsMenu">
+                  <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                  <span class="menu-title">Products</span>
+                  <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="productsMenu">
+                  <ul class="nav flex-column sub-menu">
+                    <% if(user.role==='Admin' ) { %>
+                      <li class="nav-item"> <a class="nav-link" href="/addProducts">Add Products</a></li>
+                      <li class="nav-item"> <a class="nav-link" href="/products">Manage Products</a></li>
+                      <% } %>
+                        <li class="nav-item"> <a class="nav-link" href="/product-card"> Products</a></li>
+                  </ul>
+                </div>
+              </li>
+              </li>
+              <% if(user.role==='Admin' ) { %>
+                <li class="nav-item">
+                  <a class="nav-link" data-toggle="collapse" href="#categoryMenu" aria-expanded="false"
+                    aria-controls="categoryMenu">
+                    <i class="mdi mdi-format-list-bulleted menu-icon"></i>
+                    <span class="menu-title">Category</span>
+                    <i class="menu-arrow"></i>
+                  </a>
+                  <div class="collapse" id="categoryMenu">
+                    <ul class="nav flex-column sub-menu">
+                      <li class="nav-item"> <a class="nav-link" href="/addCategory">Add Category</a></li>
+                      <li class="nav-item"> <a class="nav-link" href="/viewCategories">Manage Category</a></li>
+                    </ul>
+                  </div>
+                </li>
                 <% } %>
-                <li class="nav-item"> <a class="nav-link" href="/product-card"> Products</a></li>
-              </ul>
-            </div>
-          </li>
-          </li>
-          <% if(user.role === 'admin') { %>
-          <li class="nav-item">
-            <a class="nav-link" data-toggle="collapse" href="#categoryMenu" aria-expanded="false" aria-controls="categoryMenu">
-              <i class="mdi mdi-format-list-bulleted menu-icon"></i>
-              <span class="menu-title">Category</span>
-              <i class="menu-arrow"></i>
-            </a>
-            <div class="collapse" id="categoryMenu">
-              <ul class="nav flex-column sub-menu">
-                <li class="nav-item"> <a class="nav-link" href="/addCategory">Add Category</a></li>
-                <li class="nav-item"> <a class="nav-link" href="/viewCategories">Manage Category</a></li>
-              </ul>
-            </div>
-          </li>
-          <% } %>
         </ul>
       </ul>
     </nav>
@@ -219,11 +222,15 @@
             <li class="nav-item nav-profile dropdown border-0">
               <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown">
                 <img class="nav-profile-img mr-2" alt="" src="../../assets/images/faces/face1.jpg" />
-                <span class="profile-name"><%= user.name%></span>
+                <span class="profile-name">
+                  <%= user.name%>
+                </span>
               </a>
               <div class="dropdown-menu navbar-dropdown w-100" aria-labelledby="profileDropdown">
                 <a class="dropdown-item" href="/logout">
                   <i class="mdi mdi-logout mr-2 text-primary"></i> </a>
+                <a class="dropdown-item" href="/changePassword">
+                  <i class="mdi mdi-settings me-1 ms-1"></i> </a>
               </div>
             </li>
           </ul>

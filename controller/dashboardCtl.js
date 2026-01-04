@@ -70,14 +70,14 @@ const dashboardCtl = {
     },
     async viewUsersPage(req,res){
         try {
-            const user = await User.find({});
+            const users = await User.find({});
             return res.render('./pages/viewUsers.ejs',{
-                user
+                users
             })
         } catch (error) {
             console.log(error);
             return res.render('./pages/viewUsers.ejs',{
-                user : []
+                users : []
             })
         }
     },
@@ -119,8 +119,39 @@ const dashboardCtl = {
             
         }
     },
-    changePasswordPage(req,res){
+    
+    changePasswordPage(req, res) {
         return res.render('./pages/changePassword.ejs')
+    },
+    async changePassword(req, res) {
+        try {
+            const { currentPassword, newPassword, confirmNewPassword } = req.body;
+
+            const {token} = req.cookies;
+            let decode = jwt.verify(token, dotenv.JWT_SECRET);
+            let user = await User.findOne({ _id: decode.userId });
+
+            let isValid = await bcrypt.compare(currentPassword, user.password);
+
+            if (isValid) {
+                if (newPassword == confirmNewPassword) {
+                    user.password = await bcrypt.hash(newPassword, 10);
+                    await user.save();
+                    return res.redirect('/login');
+                } else {
+                    console.log(`New Password And Confirm Password Doesn't Match`);
+                    return res.redirect(req.get('Referrer') || '/');
+                }
+            } else {
+                console.log(`Current Password Is Invalid`);
+                
+                return req.redirect(req.get('Referrer') || '/');
+            }
+        } catch (error) {
+            console.log(error);
+
+            console.log(`Error occurred !`);
+        }
     },
 }
 
